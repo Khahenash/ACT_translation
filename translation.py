@@ -285,7 +285,7 @@ def getcognatelist(fr, en):
 
 
 def cosine(v1, v2):
-    if len(v2.keys()) == 0 or len(v1.keys() == 0):
+    if len(v2.keys()) == 0 or len(v1.keys()) == 0:
         return 0.0
 
     v1v2 = 0
@@ -357,12 +357,12 @@ if __name__ == "__main__":
 
     res_trad = []
     nb_ok = 0
-
+    nb_trad = 0
 
     #FIXME plusieurs trad possibles en resultat dans ts.xml !!!!
     for trad in root:
         src_word = trad[0][2].text
-        print src_word
+        print nb_trad+1, src_word
         if src_word in fr_vectors:
             cv = le.translate(fr_vectors[src_word], en_stopwords)
             result = {}
@@ -374,10 +374,13 @@ if __name__ == "__main__":
 
             if trad[1][2].text in [e[0] for e in l[:10]]:
                 res_trad.append((src_word, True))
+                print "OK"
                 nb_ok += 1
             else:
                 res_trad.append((src_word, False))
+                print "NOT FOUND"
             print l[:10]
+        nb_trad += 1
 
-    print nb_ok
+    print "prec: " + str(float(nb_ok)/float(len(root)))
 
